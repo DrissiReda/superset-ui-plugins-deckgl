@@ -1,29 +1,40 @@
-# @superset-ui/plugins-deckgl 🔌💡
+## @superset-ui/legacy-preset-chart-deckgl
 
-[![Codecov branch](https://img.shields.io/codecov/c/github/apache-superset/superset-ui-plugins-deckgl/master.svg?style=flat-square)](https://codecov.io/gh/apache-superset/superset-ui-plugins-deckgl/branch/master)
-[![Build Status](https://img.shields.io/travis/com/apache-superset/superset-ui-plugins-deckgl/master.svg?style=flat-square)](https://travis-ci.com/apache-superset/superset-ui-plugins-deckgl)
-[![David](https://img.shields.io/david/dev/apache-superset/superset-ui-plugins-deckgl.svg?style=flat-square)](https://david-dm.org/apache-superset/superset-ui-plugins-deckgl?type=dev)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/4d054ead-0e76-4e03-b684-797ca5924161/deploy-status)](https://app.netlify.com/sites/superset-ui-plugins-deckgl/deploys)
+[![Version](https://img.shields.io/npm/v/@superset-ui/legacy-preset-chart-deckgl.svg?style=flat-square)](https://img.shields.io/npm/v/@superset-ui/legacy-preset-chart-deckgl.svg?style=flat-square)
+[![David (path)](https://img.shields.io/david/apache-superset/superset-ui-plugins.svg?path=packages%2Fsuperset-ui-legacy-preset-chart-deckgl&style=flat-square)](https://david-dm.org/apache-superset/superset-ui-plugins?path=packages/superset-ui-legacy-preset-chart-deckgl)
 
-## Demo (Storybook)
+This plugin provides `deck.gl` for Superset.
 
-Most recent release: https://apache-superset.github.io/superset-ui-plugins-deckgl/
+### Usage
 
-Current master: https://superset-ui-plugins-deckgl.netlify.com
+Import the preset and register. This will register all the chart plugins under `deck.gl`.
 
-## Packages
+```js
+import { DeckGLChartPreset } from '@superset-ui/legacy-preset-chart-deckgl';
 
-| Package                                                                                                                                                              | Version                                                                                                                                                                                              |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [@superset-ui/legacy-preset-chart-deckgl](https://github.com/apache-superset/superset-ui-plugins-deckgl/tree/master/packages/superset-ui-legacy-preset-chart-deckgl) | [![Version](https://img.shields.io/npm/v/@superset-ui/legacy-preset-chart-deckgl.svg?style=flat-square)](https://img.shields.io/npm/v/@superset-ui/legacy-preset-chart-deckgl.svg?style=flat-square) |
+new DeckGLChartPreset().register();
+```
 
-## Contribution and development guide
+or register charts one by one. Configure `key`, which can be any `string`, and register the plugin. This `key` will be used to lookup this chart throughout the app.
 
-Please read the
-[contributing guidelines](https://github.com/apache-superset/superset-ui/blob/master/CONTRIBUTING.md)
-which include development environment setup and other things you should know about coding in this
-repo.
+```js
+import { ArcChartPlugin } from '@superset-ui/legacy-preset-chart-deckgl';
 
-### License
+new ArcChartPlugin()
+  .configure({ key: 'deck_arc' })
+  .register();
+```
 
-Apache-2.0
+Then use it via `SuperChart`. See [storybook](https://apache-superset.github.io/superset-ui-plugins-deckgl) for more details.
+
+```js
+<SuperChart
+  chartType="deck_arc"
+  width={600}
+  height={600}
+  formData={...}
+  queryData={{
+    data: {...},
+  }}
+/>
+```
